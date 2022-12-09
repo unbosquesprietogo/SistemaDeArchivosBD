@@ -1,21 +1,19 @@
 package co.edu.unbosque.sistemadearchivosbd.controller;
 
-import co.edu.unbosque.sistemadearchivosbd.model.dto.Nomina;
-import co.edu.unbosque.sistemadearchivosbd.model.services.NominaService;
+import co.edu.unbosque.sistemadearchivosbd.model.dto.AporteSocial;
+import co.edu.unbosque.sistemadearchivosbd.model.services.AporteSocialService;
 import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-@Path("/nomina")
-public class NominaResource {
-
+@Path("/AporteSocial")
+public class AporteSocialResourse {
 
     @Context
     ServletContext context;
@@ -25,24 +23,23 @@ public class NominaResource {
     static final String USER = "sprietogo";
     static final String PASS = "sprietogo";
 
-    @POST
-    @Path("/lista")
+    @GET
+    @Path("/eps")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
 
-    public Response listEmployees(Nomina nomina, @QueryParam("orden") String orden) {
+    public Response listEPS() {
 
         // Objects for handling connection
         Connection conn = null;
-        List<Nomina> employees = null;
+        List<AporteSocial> epsLista = null;
 
         try {
 
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            NominaService nominaService = new NominaService(conn);
-            employees = nominaService.getListEmployees(nomina.getDependencia(), nomina.getCargo(), orden);
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            epsLista = aporteSocialService.getCantEps();
 
             conn.close();
         } catch (SQLException se) {
@@ -56,63 +53,27 @@ public class NominaResource {
                 se.printStackTrace();
             }
         }
-        return Response.ok().entity(employees).build();
-
-    }
-
-    @POST
-    @Path("/cantidad")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-
-    public Response cantEmployees(Nomina nomina, @QueryParam("orden") String orden) {
-
-        // Objects for handling connection
-        Connection conn = null;
-        int employees = 0;
-
-        try {
-
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            NominaService nominaService = new NominaService(conn);
-            employees = nominaService.getCantEmployees(nomina.getDependencia(), nomina.getCargo(), orden);
-
-            conn.close();
-        } catch (SQLException se) {
-            se.printStackTrace(); //
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //
-        } finally {
-            try {
-                if (conn != null) conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-        }
-        return Response.ok().entity(employees).build();
+        return Response.ok().entity(epsLista).build();
 
     }
 
     @GET
-    @Path("/dependencias")
+    @Path("/pensiones")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
 
-    public Response listaDependencias (){
+    public Response listPension() {
 
         // Objects for handling connection
         Connection conn = null;
-        List<Nomina> dependencias = null;
+        List<AporteSocial> pensionLista = null;
 
         try {
 
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            NominaService nominaService = new NominaService(conn);
-            dependencias = nominaService.listaDependencias();
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            pensionLista = aporteSocialService.getCantPension();
 
             conn.close();
         } catch (SQLException se) {
@@ -126,64 +87,27 @@ public class NominaResource {
                 se.printStackTrace();
             }
         }
-        return Response.ok().entity(dependencias).build();
-
-
-    }
-    @GET
-    @Path("/dependencias/cantidad")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-
-    public Response cantDependencias (){
-
-        // Objects for handling connection
-        Connection conn = null;
-        List<Nomina> cantidadDependencias = null;
-
-        try {
-
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            NominaService nominaService = new NominaService(conn);
-            cantidadDependencias = nominaService.getCantidadDependencias();
-
-            conn.close();
-        } catch (SQLException se) {
-            se.printStackTrace(); //
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //
-        } finally {
-            try {
-                if (conn != null) conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-        }
-        return Response.ok().entity(cantidadDependencias).build();
-
+        return Response.ok().entity(pensionLista).build();
 
     }
 
     @GET
-    @Path("/dependencias/cargos")
+    @Path("/eps/dependencias/{dependencia}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
 
-    public Response cantCargos (){
+    public Response listEPSDepe(@PathParam("dependencia") String dependencia) {
 
         // Objects for handling connection
         Connection conn = null;
-        List<Nomina> cantidadCargos = null;
+        List<AporteSocial> epsLista = null;
 
         try {
 
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            NominaService nominaService = new NominaService(conn);
-            cantidadCargos = nominaService.getCantidadCargos();
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            epsLista = aporteSocialService.getCantEPSDepe(dependencia);
 
             conn.close();
         } catch (SQLException se) {
@@ -197,29 +121,27 @@ public class NominaResource {
                 se.printStackTrace();
             }
         }
-        return Response.ok().entity(cantidadCargos).build();
-
+        return Response.ok().entity(epsLista).build();
 
     }
 
     @GET
-    @Path("/dependencias/{dependencia}/cargos")
+    @Path("/pensiones/dependencias/{dependencia}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
 
-    public Response cantCargos (@PathParam("dependencia") String dependencia){
+    public Response listPensionDepe(@PathParam("dependencia") String dependencia) {
 
         // Objects for handling connection
         Connection conn = null;
-        List<Nomina> cargos = null;
+        List<AporteSocial> pensionLista = null;
 
         try {
 
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            NominaService nominaService = new NominaService(conn);
-            cargos = nominaService.listaCargos(dependencia);
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            pensionLista = aporteSocialService.getCantPensionDepe(dependencia);
 
             conn.close();
         } catch (SQLException se) {
@@ -233,8 +155,147 @@ public class NominaResource {
                 se.printStackTrace();
             }
         }
-        return Response.ok().entity(cargos).build();
-
+        return Response.ok().entity(pensionLista).build();
 
     }
+    @GET
+    @Path("/eps/cargos")
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public Response listaEPSCargo(@QueryParam("orden") String orden) {
+
+        // Objects for handling connection
+        Connection conn = null;
+        List<AporteSocial> epsLista = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            epsLista = aporteSocialService.getListaEPSCargo(orden);
+
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace(); //
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(); //
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return Response.ok().entity(epsLista).build();
+
+    }
+
+    @GET
+    @Path("/pensiones/cargos")
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public Response listaPensionCargo(@QueryParam("orden") String orden) {
+
+        // Objects for handling connection
+        Connection conn = null;
+        List<AporteSocial> pensionLista = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            pensionLista = aporteSocialService.getListaPensionCargo(orden);
+
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace(); //
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(); //
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return Response.ok().entity(pensionLista).build();
+
+    }
+
+    @GET
+    @Path("/eps/cargos/cantidad")
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public Response cantEpsCargo() {
+
+        // Objects for handling connection
+        Connection conn = null;
+        List<AporteSocial> epsLista = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            epsLista = aporteSocialService.getCantEPSCargo();
+
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace(); //
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(); //
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return Response.ok().entity(epsLista).build();
+
+    }
+
+    @GET
+    @Path("/pensiones/cargos/cantidad")
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public Response cantPensionCargo() {
+
+        // Objects for handling connection
+        Connection conn = null;
+        List<AporteSocial> pensionLista = null;
+
+        try {
+
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            AporteSocialService aporteSocialService = new AporteSocialService(conn);
+            pensionLista = aporteSocialService.getCantPensionCargo();
+
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace(); //
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(); //
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return Response.ok().entity(pensionLista).build();
+
+    }
+
+
+
+
+
 }
