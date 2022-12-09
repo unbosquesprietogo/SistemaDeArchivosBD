@@ -14,7 +14,6 @@ public class EmpleadoService {
 
     public Empleado infoPersonal (int codigo){
 
-        System.out.println("entré");
 
         PreparedStatement stmt = null;
 
@@ -84,7 +83,7 @@ public class EmpleadoService {
             empleado = new Empleado(codigoEmp,nombre,dependencia,cargo,
                     fecha_ingreso,eps,pension,sueldo,bonificacion,transporte,
                     dias_trabajados,dias_incapacidad,dias_vacaciones);
-            
+
 
             rs.close();
             stmt.close();

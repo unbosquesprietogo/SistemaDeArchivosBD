@@ -22,23 +22,29 @@ public class AporteSocial {
         this.pension = pension;
     }
 
-    public AporteSocial(int cantidad, String eps, String depedencia) {
+
+    public AporteSocial(int cantidad, String eps, String cargo) {
         this.cantidad = cantidad;
         this.eps = eps;
-        this.depedencia = depedencia;
+        this.cargo = cargo;
     }
 
-
-    public AporteSocial(int codigo, String nombre, String pension, String depedencia,int cantidad) {
+    public AporteSocial( String pension, String cargo, int cantidad) {
         this.cantidad = cantidad;
         this.pension = pension;
-        this.depedencia = depedencia;
+        this.cargo = cargo;
+    }
+
+    public AporteSocial(int codigo, String nombre, String eps, String cargo) {
+
+        this.eps = eps;
+        this.cargo = cargo;
         this.codigo = codigo;
         this.nombre =nombre;
     }
 
-    public AporteSocial(int codigo, String nombre,  String pension, int cantidad, String cargo) {
-        this.cantidad = cantidad;
+    public AporteSocial(  String nombre,  String pension, String cargo, int codigo) {
+
         this.pension = pension;
         this.cargo = cargo;
         this.codigo = codigo;

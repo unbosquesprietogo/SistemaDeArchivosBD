@@ -47,6 +47,10 @@ public class Nomina {
         this.cargo = cargo;
     }
 
+    public Nomina(String dependencia) {
+        this.dependencia = dependencia;
+    }
+
     public int getCodigo() {
         return codigo;
     }
