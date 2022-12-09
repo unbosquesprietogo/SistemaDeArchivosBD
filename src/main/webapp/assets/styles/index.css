@@ -38,7 +38,6 @@ header{
     background-color: transparent;
     width: 18vw;
     height: 18vw;
-    
   }
   
   .flip-card-inner {
@@ -93,3 +92,4 @@ header{
   .inf-card{
     margin-bottom: 5%;
   }
+
