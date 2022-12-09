@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal Empleados</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/styles/nomina.css">
+</head>
+</head>
+<body>
+
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div>
+        <span class="close">&times;</span>
+        <p>Seleccione la Información a buscar...</p>
+    </div>
+    <div class="">
+        <span>Cargo</span>
+        <select>
+          <option value="Option 1">First Option</option>
+          <option value="Option 2">2nd Option</option>
+          <option value="Option 3">Option Number 3</option>
+        </select>
+        <span>Dependencia</span>
+        <select>
+            <option value="Option 1">First Option</option>
+            <option value="Option 2">2nd Option</option>
+            <option value="Option 3">Option Number 3</option>
+          </select>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+
+  modal.style.display = "block";
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  window.location.href="index.html"
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    window.location.href="index.html"
+    
+  }
+}
+</script>
+
+
+</body>
+
+
+
+</html> 

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SistemaDeArchivosBD:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>SistemaDeArchivosBD</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="SistemaDeArchivosBD-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="SistemaDeArchivosBD:war exploded" />
+    </root>
+  </artifact>
+</component>
